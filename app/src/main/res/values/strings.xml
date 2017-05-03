@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Converter Lub</string>
     <string name="converter_lab">Converter Lab</string>
+    <string name="linkk">Официальный сайт банка:</string>
+    <string name="cashName">Название валюты</string>
+    <string name="ask">Покупка/</string>
+    <string name="bid">Продажа</string>
 </resources>

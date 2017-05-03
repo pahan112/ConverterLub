@@ -5,11 +5,13 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.io.Serializable;
+
 /**
  * Created by admin on 29.04.2017.
  */
 @Table(database = BankDataBase.class)
-public class ModelDataBaseBank extends BaseModel {
+public class ModelDataBaseBank extends BaseModel implements Serializable{
     @PrimaryKey
     @Column
     private String idDb;

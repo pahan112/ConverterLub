@@ -1,6 +1,9 @@
 package papka.pahan.converterlub.db;
 
+import com.google.gson.annotations.SerializedName;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -10,22 +13,18 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  */
 @Table(database = BankDataBase.class)
 public class ModelDataBaseCash extends BaseModel{
+
     @Column
     @PrimaryKey(autoincrement = true)
-    long _id;
-
+    public long idd;
     @Column
     private String bankId;
     @Column
     private String cashNameAtribute;
-
-    public long get_id() {
-        return _id;
-    }
-
-    public void set_id(long _id) {
-        this._id = _id;
-    }
+    @Column
+    private String ask;
+    @Column
+    private String bid;
 
     public String getBankId() {
         return bankId;
@@ -59,9 +58,5 @@ public class ModelDataBaseCash extends BaseModel{
         this.bid = bid;
     }
 
-    @Column
 
-    private String ask;
-    @Column
-    private String bid;
 }
