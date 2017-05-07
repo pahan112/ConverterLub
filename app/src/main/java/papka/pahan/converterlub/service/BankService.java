@@ -1,9 +1,7 @@
 package papka.pahan.converterlub.service;
 
-import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,6 +9,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.sql.language.Delete;
 
 import org.json.JSONException;
 
@@ -78,7 +77,7 @@ public class BankService extends IntentService {
         }
         ResultReceiver rec = intent.getParcelableExtra("receiver");
 
-
+        Delete.tables(ModelDataBaseBank.class);
         ModelDataBaseBank modelDataBaseBank = new ModelDataBaseBank();
         for (int i = 0; i < modelBank.getOrganizations().size(); i++) {
             modelDataBaseBank.setIdDb(modelBank.getOrganizations().get(i).getId());
@@ -90,17 +89,18 @@ public class BankService extends IntentService {
             modelDataBaseBank.setLinkDb(modelBank.getOrganizations().get(i).getLink());
             modelDataBaseBank.save();
         }
-
-        ModelDataBaseCash modelDataBaseCash = new ModelDataBaseCash();
+        Delete.tables(ModelDataBaseCash.class);
         for (int i = 0; i < modelBank.getOrganizations().size(); i++) {
-            modelDataBaseCash.setBankId(modelBank.getOrganizations().get(i).getId());
             for (String s : modelBank.getOrganizations().get(i).getCurrencies().keySet()) {
+                ModelDataBaseCash modelDataBaseCash = new ModelDataBaseCash();
                 modelDataBaseCash.setCashNameAtribute(s);
                 modelDataBaseCash.setAsk(modelBank.getOrganizations().get(i).getCurrencies().get(s).getAsk());
                 modelDataBaseCash.setBid(modelBank.getOrganizations().get(i).getCurrencies().get(s).getBid());
+                modelDataBaseCash.setBankId(modelBank.getOrganizations().get(i).getId());
                 modelDataBaseCash.save();
             }
         }
+        Delete.tables(ModelDataBaseCurrencies.class);
         ModelDataBaseCurrencies modelDataBaseCurrencies = new ModelDataBaseCurrencies();
         for (String s1 : modelBank.getCurrencies().keySet()) {
             modelDataBaseCurrencies.setAtributCash(s1);

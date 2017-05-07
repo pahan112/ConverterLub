@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/textView4"
             android:layout_below="@+id/textView3"
-            android:text="@string/bid" />
+            android:text="Продажа" />
     </RelativeLayout>
 
 </LinearLayout>
