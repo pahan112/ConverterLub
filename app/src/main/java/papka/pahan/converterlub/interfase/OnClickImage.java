@@ -10,5 +10,5 @@ public interface OnClickImage {
     void onClickPhone(String phone);
     void onClicksLink (String link);
     void onClickSetting(ModelDataBaseBank modelDataBaseBank);
-    void onClickMap(String address);
+    void onClickMap(ModelDataBaseBank modelDataBaseBank);
 }

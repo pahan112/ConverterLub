@@ -28,6 +28,10 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder
         this.modelDataBaseBanks = modelDataBaseBanks;
     }
 
+    public void setBankList(List<ModelDataBaseBank> modelBankList) {
+        this.modelDataBaseBanks = modelBankList;
+        notifyDataSetChanged();
+    }
     @Override
     public BankAdapter.BankViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bank_list, parent, false);
@@ -92,7 +96,7 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder
             imageViewMap.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnClickImage.onClickMap(modelDataBaseBanks.getAddressDb());
+                    mOnClickImage.onClickMap(modelDataBaseBanks);
                 }
             });
             imageViewSetting.setOnClickListener(new View.OnClickListener() {

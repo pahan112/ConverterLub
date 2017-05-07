@@ -16,21 +16,22 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="22dp"
+            android:layout_marginStart="35dp"
             android:text="@string/converter_lab"
             android:textColor="@android:color/white"
             android:textSize="23sp" />
 
         <android.support.v7.widget.SearchView
+            android:background="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/search_bank"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="22dp" />
     </RelativeLayout>
 <android.support.v7.widget.RecyclerView
     android:id="@+id/rv_bank_list"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
 </LinearLayout>

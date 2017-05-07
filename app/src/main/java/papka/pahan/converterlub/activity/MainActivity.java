@@ -3,6 +3,7 @@ package papka.pahan.converterlub.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -11,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.widget.EditText;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -29,8 +32,13 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
     ResultReceiver mReceiver;
     @BindView(R.id.rv_bank_list)
     RecyclerView mRecyclerViewBank;
+    @BindView(R.id.search_bank)
+    SearchView mSearchViewBank;
     List<ModelDataBaseBank> modelDataBaseBanks = new ArrayList<>();
+    List<ModelDataBaseBank> modelDataBaseBanksSerch = new ArrayList<>();
 
+
+    BankAdapter bankAdapter;
 
     final String LOG_TAG = "myLog";
 
@@ -44,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
         resultReceiveBank();
         intent.putExtra("receiver", mReceiver);
         startService(intent);
+
+        serch();
     }
 
     public void resultReceiveBank() {
@@ -53,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
                 if (resultCode == 200) {
                     modelDataBaseBanks = new Select().from(ModelDataBaseBank.class).queryList();
                     mRecyclerViewBank.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-                    BankAdapter bankAdapter = new BankAdapter(modelDataBaseBanks, MainActivity.this);
+                    bankAdapter = new BankAdapter(modelDataBaseBanks, MainActivity.this);
                     mRecyclerViewBank.setAdapter(bankAdapter);
                 }
             }
@@ -89,8 +99,37 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
     }
 
     @Override
-    public void onClickMap(String address) {
+    public void onClickMap(ModelDataBaseBank modelDataBaseBank) {
         Intent intent = new Intent(this , MapActivity.class);
+        intent.putExtra(MapActivity.BANK_MAP, modelDataBaseBank);
         startActivity(intent);
     }
+
+    private void serch(){
+        ((EditText) mSearchViewBank.findViewById(R.id.search_src_text)).setTextColor(Color.WHITE);
+        mSearchViewBank.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty()){
+                    bankAdapter.setBankList(modelDataBaseBanks);
+                }
+                else{
+                    modelDataBaseBanksSerch.clear();
+                    for (ModelDataBaseBank bank : modelDataBaseBanks){
+                        if (bank.getTitleDb().toLowerCase().contains(newText.toLowerCase()) || bank.getCityIdDb().toLowerCase().contains(newText.toLowerCase())) {
+                            modelDataBaseBanksSerch.add(bank);
+                    }
+                    bankAdapter.setBankList(modelDataBaseBanksSerch);
+                }
+
+                }
+                return false;
+            }
+    });
+}
 }
