@@ -27,6 +27,7 @@
         </activity>
         <service android:name=".service.BankService"/>
         <activity android:name=".activity.MapActivity"/>
+        <activity android:name=".activity.DetailsActivity"/>
     </application>
 
 </manifest>

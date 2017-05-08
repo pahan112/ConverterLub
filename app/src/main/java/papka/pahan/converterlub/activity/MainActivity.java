@@ -95,7 +95,9 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
 
     @Override
     public void onClickSetting(ModelDataBaseBank modelDataBaseBank) {
-
+        Intent intent = new Intent(this,DetailsActivity.class);
+        intent.putExtra(DetailsActivity.BANK_DETAILS,modelDataBaseBank);
+        startActivity(intent);
     }
 
     @Override
