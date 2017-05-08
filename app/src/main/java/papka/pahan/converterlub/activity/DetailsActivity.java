@@ -2,6 +2,7 @@ package papka.pahan.converterlub.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import papka.pahan.converterlub.db.ModelDataBaseCash;
 import papka.pahan.converterlub.db.ModelDataBaseCash_Table;
 import papka.pahan.converterlub.db.ModelDataBaseCurrencies;
 import papka.pahan.converterlub.db.ModelDataBaseCurrencies_Table;
+import papka.pahan.converterlub.dialog.ShareDialog;
 
 /**
  * Created by admin on 08.05.2017.
@@ -31,18 +33,18 @@ public class DetailsActivity extends AppCompatActivity {
 
     public static final String BANK_DETAILS= "bank_details";
     private ModelDataBaseBank mModelDataBaseBank;
-    @BindView(R.id.tv_title_setting)
-    TextView mTitleSetingTextView;
-    @BindView(R.id.tv_city_setting)
-    TextView mCitySetingTextView;
-    @BindView(R.id.tv_title_setting2)
-    TextView mTitleSetingTextView2;
-    @BindView(R.id.tv_link_setting)
-    TextView mLinkSetingTextView;
-    @BindView(R.id.tv_address_setting)
-    TextView mAddressSetingTextView;
-    @BindView(R.id.tv_phone_setting)
-    TextView mPhoneSetingTextView;
+    @BindView(R.id.tv_title_details)
+    TextView mTitleDetailsTextView;
+    @BindView(R.id.tv_city_details)
+    TextView mCityDetailsTextView;
+    @BindView(R.id.tv_title_details2)
+    TextView mTitleDetailsTextView2;
+    @BindView(R.id.tv_link_details)
+    TextView mLinkDetailsTextView;
+    @BindView(R.id.tv_address_details)
+    TextView mAddressDetailsTextView;
+    @BindView(R.id.tv_phone_details)
+    TextView mPhoneDetailsTextView;
     @BindView(R.id.rv_bank_setting)
     RecyclerView mCashRecyclerView;
 
@@ -53,7 +55,7 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bank_setting);
+        setContentView(R.layout.activity_bank_details);
         ButterKnife.bind(this);
 
         mModelDataBaseBank = (ModelDataBaseBank) getIntent().getSerializableExtra(BANK_DETAILS);
@@ -72,16 +74,25 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void saveText(){
-        mTitleSetingTextView.setText(mModelDataBaseBank.getTitleDb());
-        mTitleSetingTextView2.setText(mModelDataBaseBank.getTitleDb());
-        mCitySetingTextView.setText(mModelDataBaseBank.getCityIdDb());
-        mLinkSetingTextView.setText(mModelDataBaseBank.getLinkDb());
-        mAddressSetingTextView.setText("Адрес: " + mModelDataBaseBank.getAddressDb());
-        mPhoneSetingTextView.setText("Тел.: " + mModelDataBaseBank.getPhoneDb());
+        mTitleDetailsTextView.setText(mModelDataBaseBank.getTitleDb());
+        mTitleDetailsTextView2.setText(mModelDataBaseBank.getTitleDb());
+        mCityDetailsTextView.setText(mModelDataBaseBank.getCityIdDb());
+        mLinkDetailsTextView.setText(mModelDataBaseBank.getLinkDb());
+        mAddressDetailsTextView.setText("Адрес: " + mModelDataBaseBank.getAddressDb());
+        mPhoneDetailsTextView.setText("Тел.: " + mModelDataBaseBank.getPhoneDb());
     }
 
-    @OnClick(R.id.iv_back_setting)
-    void onClick(){
+    @OnClick(R.id.iv_back_details)
+    void onClickBack(){
         onBackPressed();
+    }
+
+    @OnClick(R.id.iv_share)
+    void onClickShare(){
+        DialogFragment dialogFragment = new ShareDialog();
+        Bundle args = new Bundle();
+        args.putSerializable(ShareDialog.SHARE_DIALOG, mModelDataBaseBank);
+        dialogFragment.setArguments(args);
+        dialogFragment.show(getSupportFragmentManager(), "dialogFragment");
     }
 }

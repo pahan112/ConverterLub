@@ -8,12 +8,15 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -29,18 +32,21 @@ import papka.pahan.converterlub.interfase.OnClickImage;
 import papka.pahan.converterlub.service.BankService;
 
 public class MainActivity extends AppCompatActivity implements OnClickImage {
-    ResultReceiver mReceiver;
     @BindView(R.id.rv_bank_list)
     RecyclerView mRecyclerViewBank;
     @BindView(R.id.search_bank)
     SearchView mSearchViewBank;
-    List<ModelDataBaseBank> modelDataBaseBanks = new ArrayList<>();
-    List<ModelDataBaseBank> modelDataBaseBanksSerch = new ArrayList<>();
+    @BindView(R.id.sr_bank)
+    SwipeRefreshLayout mBankSwipeRefreshLayout;
+    @BindView(R.id.pb_bank)
+    ProgressBar mBankProgressBar;
 
+    private List<ModelDataBaseBank> mModelDataBaseBanks = new ArrayList<>();
+    private List<ModelDataBaseBank> mModelDataBaseBanksSearch = new ArrayList<>();
 
-    BankAdapter bankAdapter;
+    private BankAdapter mBankAdapter;
 
-    final String LOG_TAG = "myLog";
+    private ResultReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +54,14 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        mBankProgressBar.setVisibility(View.VISIBLE);
+
         Intent intent = new Intent(this, BankService.class);
         resultReceiveBank();
         intent.putExtra("receiver", mReceiver);
         startService(intent);
-
-        serch();
+        swipeRefreshLayout();
+        search();
     }
 
     public void resultReceiveBank() {
@@ -61,15 +69,27 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {
                 if (resultCode == 200) {
-                    modelDataBaseBanks = new Select().from(ModelDataBaseBank.class).queryList();
+                    mBankProgressBar.setVisibility(View.INVISIBLE);
+                    mModelDataBaseBanks.clear();
+                    mModelDataBaseBanks = new Select().from(ModelDataBaseBank.class).queryList();
                     mRecyclerViewBank.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-                    bankAdapter = new BankAdapter(modelDataBaseBanks, MainActivity.this);
-                    mRecyclerViewBank.setAdapter(bankAdapter);
+                    mBankAdapter = new BankAdapter(mModelDataBaseBanks, MainActivity.this);
+                    mRecyclerViewBank.setAdapter(mBankAdapter);
+                    mBankAdapter.notifyDataSetChanged();
                 }
             }
         };
     }
 
+    private void swipeRefreshLayout(){
+        mBankSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                resultReceiveBank();
+                mBankSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
 
     @Override
     public void onClickPhone(String phone) {
@@ -95,19 +115,19 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
 
     @Override
     public void onClickSetting(ModelDataBaseBank modelDataBaseBank) {
-        Intent intent = new Intent(this,DetailsActivity.class);
-        intent.putExtra(DetailsActivity.BANK_DETAILS,modelDataBaseBank);
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra(DetailsActivity.BANK_DETAILS, modelDataBaseBank);
         startActivity(intent);
     }
 
     @Override
     public void onClickMap(ModelDataBaseBank modelDataBaseBank) {
-        Intent intent = new Intent(this , MapActivity.class);
+        Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra(MapActivity.BANK_MAP, modelDataBaseBank);
         startActivity(intent);
     }
 
-    private void serch(){
+    private void search() {
         ((EditText) mSearchViewBank.findViewById(R.id.search_src_text)).setTextColor(Color.WHITE);
         mSearchViewBank.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -117,21 +137,20 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.isEmpty()){
-                    bankAdapter.setBankList(modelDataBaseBanks);
-                }
-                else{
-                    modelDataBaseBanksSerch.clear();
-                    for (ModelDataBaseBank bank : modelDataBaseBanks){
+                if (newText.isEmpty()) {
+                    mBankAdapter.setBankList(mModelDataBaseBanks);
+                } else {
+                    mModelDataBaseBanksSearch.clear();
+                    for (ModelDataBaseBank bank : mModelDataBaseBanks) {
                         if (bank.getTitleDb().toLowerCase().contains(newText.toLowerCase()) || bank.getCityIdDb().toLowerCase().contains(newText.toLowerCase())) {
-                            modelDataBaseBanksSerch.add(bank);
+                            mModelDataBaseBanksSearch.add(bank);
+                        }
+                        mBankAdapter.setBankList(mModelDataBaseBanksSearch);
                     }
-                    bankAdapter.setBankList(modelDataBaseBanksSerch);
-                }
 
                 }
                 return false;
             }
-    });
-}
+        });
+    }
 }

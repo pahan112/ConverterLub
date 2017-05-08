@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.raizlabs.android.dbflow.config.FlowConfig;
@@ -30,7 +29,6 @@ import papka.pahan.converterlub.model.ModelBank;
 
 public class BankService extends IntentService {
 
-    final String LOG_TAG = "myLog";
     private ModelBank modelBank;
 
     public BankService() {
@@ -47,7 +45,6 @@ public class BankService extends IntentService {
 
     private void connect(String http) throws IOException, JSONException {
         URL url = new URL(http);
-        Log.d(LOG_TAG,"1");
         HttpURLConnection c = (HttpURLConnection) url.openConnection();
         c.setRequestMethod("GET");
         c.setRequestProperty("Content-length", "0");
@@ -67,16 +64,7 @@ public class BankService extends IntentService {
         modelBank = gson.fromJson(sb.toString(), ModelBank.class);
     }
 
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-
-        try {
-            connect("http://resources.finance.ua/ru/public/currency-cash.json");
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-        ResultReceiver rec = intent.getParcelableExtra("receiver");
-
+    private void createModelDataBaseBank(){
         Delete.tables(ModelDataBaseBank.class);
         ModelDataBaseBank modelDataBaseBank = new ModelDataBaseBank();
         for (int i = 0; i < modelBank.getOrganizations().size(); i++) {
@@ -89,6 +77,9 @@ public class BankService extends IntentService {
             modelDataBaseBank.setLinkDb(modelBank.getOrganizations().get(i).getLink());
             modelDataBaseBank.save();
         }
+    }
+
+    private void createModelDataBaseCash(){
         Delete.tables(ModelDataBaseCash.class);
         for (int i = 0; i < modelBank.getOrganizations().size(); i++) {
             for (String s : modelBank.getOrganizations().get(i).getCurrencies().keySet()) {
@@ -100,6 +91,9 @@ public class BankService extends IntentService {
                 modelDataBaseCash.save();
             }
         }
+    }
+
+    private void createModelDataBaseCurrencies(){
         Delete.tables(ModelDataBaseCurrencies.class);
         ModelDataBaseCurrencies modelDataBaseCurrencies = new ModelDataBaseCurrencies();
         for (String s1 : modelBank.getCurrencies().keySet()) {
@@ -107,7 +101,20 @@ public class BankService extends IntentService {
             modelDataBaseCurrencies.setFullCash(modelBank.getCurrencies().get(s1));
             modelDataBaseCurrencies.save();
         }
+    }
 
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+
+        try {
+            connect("http://resources.finance.ua/ru/public/currency-cash.json");
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        ResultReceiver rec = intent.getParcelableExtra("receiver");
+        createModelDataBaseBank();
+        createModelDataBaseCash();
+        createModelDataBaseCurrencies();
         if (rec != null) {
             rec.send(200, null);
         }

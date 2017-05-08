@@ -60,13 +60,13 @@
             android:id="@+id/iv_brouser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="9dp"
+            android:padding="10dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_link" />
 
         <ImageView
             android:id="@+id/iv_map"
-            android:padding="6dp"
+            android:padding="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -76,7 +76,7 @@
             android:id="@+id/iv_call"
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:padding="7dp"
+            android:padding="8dp"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_phone" />
 
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="13dp"
+            android:padding="14dp"
             app:srcCompat="@drawable/ic_next" />
     </LinearLayout>
 
