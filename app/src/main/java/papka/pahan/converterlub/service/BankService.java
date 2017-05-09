@@ -30,8 +30,8 @@ import papka.pahan.converterlub.preference.PreferenceManager;
 
 public class BankService extends IntentService {
 
-    private ModelBank modelBank;
-    private ResultReceiver rec;
+    private ModelBank mModelBank;
+    private ResultReceiver mRec;
 
     public BankService() {
         super("service");
@@ -62,33 +62,33 @@ public class BankService extends IntentService {
         }
         br.close();
         Gson gson = new Gson();
-        modelBank = gson.fromJson(sb.toString(), ModelBank.class);
+        mModelBank = gson.fromJson(sb.toString(), ModelBank.class);
     }
 
     private void createModelDataBaseBank() {
         Delete.tables(ModelDataBaseBank.class);
         ModelDataBaseBank modelDataBaseBank = new ModelDataBaseBank();
-        for (int i = 0; i < modelBank.getOrganizations().size(); i++) {
-            modelDataBaseBank.setIdDb(modelBank.getOrganizations().get(i).getId());
-            modelDataBaseBank.setTitleDb(modelBank.getOrganizations().get(i).getTitle());
-            modelDataBaseBank.setRegionIDb(modelBank.getRegions().get(modelBank.getOrganizations().get(i).getRegionId()));
-            modelDataBaseBank.setCityIdDb(modelBank.getCities().get(modelBank.getOrganizations().get(i).getCityId()));
-            modelDataBaseBank.setPhoneDb(modelBank.getOrganizations().get(i).getPhone());
-            modelDataBaseBank.setAddressDb(modelBank.getOrganizations().get(i).getAddress());
-            modelDataBaseBank.setLinkDb(modelBank.getOrganizations().get(i).getLink());
+        for (int i = 0; i < mModelBank.getOrganizations().size(); i++) {
+            modelDataBaseBank.setIdDb(mModelBank.getOrganizations().get(i).getId());
+            modelDataBaseBank.setTitleDb(mModelBank.getOrganizations().get(i).getTitle());
+            modelDataBaseBank.setRegionIDb(mModelBank.getRegions().get(mModelBank.getOrganizations().get(i).getRegionId()));
+            modelDataBaseBank.setCityIdDb(mModelBank.getCities().get(mModelBank.getOrganizations().get(i).getCityId()));
+            modelDataBaseBank.setPhoneDb(mModelBank.getOrganizations().get(i).getPhone());
+            modelDataBaseBank.setAddressDb(mModelBank.getOrganizations().get(i).getAddress());
+            modelDataBaseBank.setLinkDb(mModelBank.getOrganizations().get(i).getLink());
             modelDataBaseBank.save();
         }
     }
 
     private void createModelDataBaseCash() {
         Delete.tables(ModelDataBaseCash.class);
-        for (int i = 0; i < modelBank.getOrganizations().size(); i++) {
-            for (String s : modelBank.getOrganizations().get(i).getCurrencies().keySet()) {
+        for (int i = 0; i < mModelBank.getOrganizations().size(); i++) {
+            for (String s : mModelBank.getOrganizations().get(i).getCurrencies().keySet()) {
                 ModelDataBaseCash modelDataBaseCash = new ModelDataBaseCash();
                 modelDataBaseCash.setCashNameAtribute(s);
-                modelDataBaseCash.setAsk(modelBank.getOrganizations().get(i).getCurrencies().get(s).getAsk());
-                modelDataBaseCash.setBid(modelBank.getOrganizations().get(i).getCurrencies().get(s).getBid());
-                modelDataBaseCash.setBankId(modelBank.getOrganizations().get(i).getId());
+                modelDataBaseCash.setAsk(mModelBank.getOrganizations().get(i).getCurrencies().get(s).getAsk());
+                modelDataBaseCash.setBid(mModelBank.getOrganizations().get(i).getCurrencies().get(s).getBid());
+                modelDataBaseCash.setBankId(mModelBank.getOrganizations().get(i).getId());
                 modelDataBaseCash.save();
             }
         }
@@ -97,9 +97,9 @@ public class BankService extends IntentService {
     private void createModelDataBaseCurrencies() {
         Delete.tables(ModelDataBaseCurrencies.class);
         ModelDataBaseCurrencies modelDataBaseCurrencies = new ModelDataBaseCurrencies();
-        for (String s1 : modelBank.getCurrencies().keySet()) {
+        for (String s1 : mModelBank.getCurrencies().keySet()) {
             modelDataBaseCurrencies.setAtributCash(s1);
-            modelDataBaseCurrencies.setFullCash(modelBank.getCurrencies().get(s1));
+            modelDataBaseCurrencies.setFullCash(mModelBank.getCurrencies().get(s1));
             modelDataBaseCurrencies.save();
         }
     }
@@ -112,20 +112,20 @@ public class BankService extends IntentService {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        rec = intent.getParcelableExtra("receiver");
+        mRec = intent.getParcelableExtra("receiver");
         getPref();
-        if (rec != null) {
-            rec.send(200, null);
+        if (mRec != null) {
+            mRec.send(200, null);
         }
     }
 
     private void getPref() {
-        if (PreferenceManager.loadStringParam(this, PreferenceManager.PARAM_LAST_UPDATE).equals(modelBank.getDate())) {
-            if (rec != null) {
-                rec.send(200, null);
+        if (PreferenceManager.loadStringParam(this, PreferenceManager.PARAM_LAST_UPDATE).equals(mModelBank.getDate())) {
+            if (mRec != null) {
+                mRec.send(200, null);
             }
         } else {
-            PreferenceManager.storeStringParam(this, PreferenceManager.PARAM_LAST_UPDATE, modelBank.getDate());
+            PreferenceManager.storeStringParam(this, PreferenceManager.PARAM_LAST_UPDATE, mModelBank.getDate());
             createModelDataBaseBank();
             createModelDataBaseCash();
             createModelDataBaseCurrencies();
