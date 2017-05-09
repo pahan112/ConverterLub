@@ -22,6 +22,7 @@ import papka.pahan.converterlub.db.ModelDataBaseBank;
 import papka.pahan.converterlub.db.ModelDataBaseCash;
 import papka.pahan.converterlub.db.ModelDataBaseCurrencies;
 import papka.pahan.converterlub.model.ModelBank;
+import papka.pahan.converterlub.preference.PreferenceManager;
 
 /**
  * Created by admin on 29.04.2017.
@@ -30,6 +31,7 @@ import papka.pahan.converterlub.model.ModelBank;
 public class BankService extends IntentService {
 
     private ModelBank modelBank;
+    private ResultReceiver rec;
 
     public BankService() {
         super("service");
@@ -40,7 +42,6 @@ public class BankService extends IntentService {
         super.onCreate();
         FlowManager.init(new FlowConfig.Builder(this).build());
     }
-
 
 
     private void connect(String http) throws IOException, JSONException {
@@ -64,7 +65,7 @@ public class BankService extends IntentService {
         modelBank = gson.fromJson(sb.toString(), ModelBank.class);
     }
 
-    private void createModelDataBaseBank(){
+    private void createModelDataBaseBank() {
         Delete.tables(ModelDataBaseBank.class);
         ModelDataBaseBank modelDataBaseBank = new ModelDataBaseBank();
         for (int i = 0; i < modelBank.getOrganizations().size(); i++) {
@@ -79,7 +80,7 @@ public class BankService extends IntentService {
         }
     }
 
-    private void createModelDataBaseCash(){
+    private void createModelDataBaseCash() {
         Delete.tables(ModelDataBaseCash.class);
         for (int i = 0; i < modelBank.getOrganizations().size(); i++) {
             for (String s : modelBank.getOrganizations().get(i).getCurrencies().keySet()) {
@@ -93,7 +94,7 @@ public class BankService extends IntentService {
         }
     }
 
-    private void createModelDataBaseCurrencies(){
+    private void createModelDataBaseCurrencies() {
         Delete.tables(ModelDataBaseCurrencies.class);
         ModelDataBaseCurrencies modelDataBaseCurrencies = new ModelDataBaseCurrencies();
         for (String s1 : modelBank.getCurrencies().keySet()) {
@@ -111,13 +112,25 @@ public class BankService extends IntentService {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        ResultReceiver rec = intent.getParcelableExtra("receiver");
-        createModelDataBaseBank();
-        createModelDataBaseCash();
-        createModelDataBaseCurrencies();
+        rec = intent.getParcelableExtra("receiver");
+        getPref();
         if (rec != null) {
             rec.send(200, null);
         }
     }
+
+    private void getPref() {
+        if (PreferenceManager.loadStringParam(this, PreferenceManager.PARAM_LAST_UPDATE).equals(modelBank.getDate())) {
+            if (rec != null) {
+                rec.send(200, null);
+            }
+        } else {
+            PreferenceManager.storeStringParam(this, PreferenceManager.PARAM_LAST_UPDATE, modelBank.getDate());
+            createModelDataBaseBank();
+            createModelDataBaseCash();
+            createModelDataBaseCurrencies();
+        }
+    }
+
 }
 
