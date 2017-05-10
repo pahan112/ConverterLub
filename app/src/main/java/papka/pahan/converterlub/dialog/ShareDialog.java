@@ -92,7 +92,7 @@ public class ShareDialog extends DialogFragment {
         }
         mShareImageView.setImageBitmap(b);
         int maxX = (int)((305 / 2) - (304 / 2));
-        int maxY = (int)((mHeightImage/ 2) - (500 / 2));
+        int maxY = (int)((mHeightImage/ 2) - (300 / 2));
 
         final int maxLeft = (maxX * -1);
         final int maxRight = maxX;
