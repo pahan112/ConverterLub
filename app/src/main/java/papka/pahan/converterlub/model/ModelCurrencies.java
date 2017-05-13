@@ -7,6 +7,12 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ModelCurrencies {
+
+    @SerializedName("ask")
+    private String ask;
+    @SerializedName("bid")
+    private String bid;
+
     public String getAsk() {
         return ask;
     }
@@ -22,10 +28,4 @@ public class ModelCurrencies {
     public void setBid(String bid) {
         this.bid = bid;
     }
-
-    @SerializedName("ask")
-    private String ask;
-    @SerializedName("bid")
-    private String bid;
-
 }

@@ -10,6 +10,18 @@ import java.util.List;
  */
 
 public class ModelBank {
+
+    @SerializedName("date")
+    private String date;
+    @SerializedName("organizations")
+    private List<ModelOrganization> organizations;
+    @SerializedName("currencies")
+    private HashMap<String,String> currencies;
+    @SerializedName("regions")
+    private HashMap<String,String> regions;
+    @SerializedName("cities")
+    private HashMap<String,String> cities;
+
     public String getDate() {
         return date;
     }
@@ -49,15 +61,4 @@ public class ModelBank {
     public void setCities(HashMap<String, String> cities) {
         this.cities = cities;
     }
-
-    @SerializedName("date")
-    private String date;
-    @SerializedName("organizations")
-    private List<ModelOrganization> organizations;
-    @SerializedName("currencies")
-    private HashMap<String,String> currencies;
-    @SerializedName("regions")
-    private HashMap<String,String> regions;
-    @SerializedName("cities")
-    private HashMap<String,String> cities;
 }

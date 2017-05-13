@@ -1,16 +1,13 @@
 package papka.pahan.converterlub.activity;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -28,10 +25,10 @@ import butterknife.ButterKnife;
 import papka.pahan.converterlub.R;
 import papka.pahan.converterlub.adapter.BankAdapter;
 import papka.pahan.converterlub.db.ModelDataBaseBank;
-import papka.pahan.converterlub.interfase.OnClickImage;
 import papka.pahan.converterlub.service.BankService;
 
-public class MainActivity extends AppCompatActivity implements OnClickImage {
+public class MainActivity extends AppCompatActivity implements BankAdapter.OnClickBankItemListener {
+
     @BindView(R.id.rv_bank_list)
     RecyclerView mRecyclerViewBank;
     @BindView(R.id.search_bank)
@@ -43,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
 
     private List<ModelDataBaseBank> mModelDataBaseBanks = new ArrayList<>();
     private List<ModelDataBaseBank> mModelDataBaseBanksSearch = new ArrayList<>();
-
     private BankAdapter mBankAdapter;
 
     private ResultReceiver mReceiver;
@@ -55,13 +51,13 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
         ButterKnife.bind(this);
 
         mBankProgressBar.setVisibility(View.VISIBLE);
+        initSwipeRefreshLayout();
+        initSearch();
 
         Intent intent = new Intent(this, BankService.class);
         resultReceiveBank();
         intent.putExtra("receiver", mReceiver);
         startService(intent);
-        swipeRefreshLayout();
-        search();
     }
 
     public void resultReceiveBank() {
@@ -81,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
         };
     }
 
-    private void swipeRefreshLayout(){
+    private void initSwipeRefreshLayout() {
         mBankSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -93,17 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
 
     @Override
     public void onClickPhone(String phone) {
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
         startActivity(intent);
     }
 
@@ -127,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnClickImage {
         startActivity(intent);
     }
 
-    private void search() {
+    private void initSearch() {
         ((EditText) mSearchViewBank.findViewById(R.id.search_src_text)).setTextColor(Color.WHITE);
         mSearchViewBank.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

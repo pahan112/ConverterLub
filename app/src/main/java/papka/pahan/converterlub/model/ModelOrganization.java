@@ -9,6 +9,7 @@ import java.util.HashMap;
  */
 
 public class ModelOrganization {
+
     @SerializedName("id")
     private String id;
     @SerializedName("title")
@@ -21,6 +22,10 @@ public class ModelOrganization {
     private String phone;
     @SerializedName("address")
     private String address;
+    @SerializedName("link")
+    private String link;
+    @SerializedName("currencies")
+    private HashMap<String,ModelCurrencies> currencies;
 
     public String getId() {
         return id;
@@ -85,10 +90,4 @@ public class ModelOrganization {
     public void setCurrencies(HashMap<String, ModelCurrencies> currencies) {
         this.currencies = currencies;
     }
-
-    @SerializedName("link")
-    private String link;
-    @SerializedName("currencies")
-    private HashMap<String,ModelCurrencies> currencies;
-
 }

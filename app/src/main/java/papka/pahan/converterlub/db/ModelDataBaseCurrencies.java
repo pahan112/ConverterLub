@@ -10,18 +10,19 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  */
 @Table(database = BankDataBase.class)
 public class ModelDataBaseCurrencies extends BaseModel {
+
     @PrimaryKey
     @Column
-    private  String atributCash;
+    private  String attributeCash;
     @Column
     private  String fullCash;
 
-    public String getAtributCash() {
-        return atributCash;
+    public String getAttributeCash() {
+        return attributeCash;
     }
 
-    public void setAtributCash(String atributCash) {
-        this.atributCash = atributCash;
+    public void setAttributeCash(String attributeCash) {
+        this.attributeCash = attributeCash;
     }
 
     public String getFullCash() {

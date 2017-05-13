@@ -30,13 +30,16 @@ import papka.pahan.converterlub.db.ModelDataBaseBank;
  */
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+
     public static final String BANK_MAP = "bank_map";
-    private GoogleMap mGoogleMap;
-    private ModelDataBaseBank mModelBank;
+
     @BindView(R.id.tv_city_setting_map)
     TextView mMapCityTextView;
     @BindView(R.id.tv_title_setting_map)
     TextView mMapTitleTextView;
+
+    private GoogleMap mGoogleMap;
+    private ModelDataBaseBank mModelBank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

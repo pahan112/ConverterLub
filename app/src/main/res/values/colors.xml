@@ -3,7 +3,8 @@
     <color name="colorPrimary">#546d7b</color>
     <color name="colorPrimaryDark">#374650</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="ligthGrey">#eeecee</color>
-    <color name="grey">#afbdc5</color>
-    <color name="greyligth">#8f034f</color>
+
+    <color name="color_light_grey">#eeecee</color>
+    <color name="color_grey">#afbdc5</color>
+    <color name="color_share">#8f034f</color>
 </resources>

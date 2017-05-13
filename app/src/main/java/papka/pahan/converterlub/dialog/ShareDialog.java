@@ -85,7 +85,7 @@ public class ShareDialog extends DialogFragment {
         paint.setTextSize(18.0f);
         for (int i = 0; i < mModelDataBaseCash.size(); i++) {
             paint.setColor(Color.RED);
-            c.drawText(( mModelDataBaseCash.get(i)).getCashNameAtribute(), 35, (float) mPaddingExchange, paint);
+            c.drawText(( mModelDataBaseCash.get(i)).getCashNameAttribute(), 35, (float) mPaddingExchange, paint);
             paint.setColor(Color.BLACK);
             c.drawText((mModelDataBaseCash.get(i)).getAsk().substring(0, 5) + Operator.Operation.DIVISION + (mModelDataBaseCash.get(i)).getBid().substring(0, 5), 150, (float) this.mPaddingExchange, paint);
             mPaddingExchange += 45;

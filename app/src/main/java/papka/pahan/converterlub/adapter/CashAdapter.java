@@ -30,7 +30,7 @@ public class CashAdapter extends RecyclerView.Adapter<CashAdapter.CashViewHolder
 
     @Override
     public CashAdapter.CashViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new CashViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cash_list, parent, false));
+        return new CashViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cash, parent, false));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package papka.pahan.converterlub.preference;
+package papka.pahan.converterlub.tools;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,6 +10,7 @@ import papka.pahan.converterlub.BuildConfig;
  */
 
 public abstract class PreferenceManager {
+
     public static final String PARAM_LAST_UPDATE = "PARAM_LAST_UPDATE";
 
     public static void storeStringParam(Context context, String key, String value) {

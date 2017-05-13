@@ -13,7 +13,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import papka.pahan.converterlub.R;
 import papka.pahan.converterlub.db.ModelDataBaseBank;
-import papka.pahan.converterlub.interfase.OnClickImage;
 
 /**
  * Created by admin on 01.05.2017.
@@ -22,19 +21,16 @@ import papka.pahan.converterlub.interfase.OnClickImage;
 public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder> {
 
     private List<ModelDataBaseBank> modelDataBaseBanks;
-    private OnClickImage mOnClickImage;
-    public BankAdapter(List<ModelDataBaseBank> modelDataBaseBanks , OnClickImage mOnClickImage) {
-        this.mOnClickImage = mOnClickImage;
+    private OnClickBankItemListener mOnClickBankItemListener;
+
+    public BankAdapter(List<ModelDataBaseBank> modelDataBaseBanks , OnClickBankItemListener mOnClickBankItemListener) {
+        this.mOnClickBankItemListener = mOnClickBankItemListener;
         this.modelDataBaseBanks = modelDataBaseBanks;
     }
 
-    public void setBankList(List<ModelDataBaseBank> modelBankList) {
-        this.modelDataBaseBanks = modelBankList;
-        notifyDataSetChanged();
-    }
     @Override
     public BankAdapter.BankViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new BankViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.bank_list, parent, false));
+        return new BankViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bank, parent, false));
     }
 
     @Override
@@ -45,6 +41,11 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder
     @Override
     public int getItemCount() {
         return modelDataBaseBanks.size();
+    }
+
+    public void setBankList(List<ModelDataBaseBank> modelBankList) {
+        this.modelDataBaseBanks = modelBankList;
+        notifyDataSetChanged();
     }
 
     public class BankViewHolder extends RecyclerView.ViewHolder {
@@ -60,8 +61,8 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder
         @BindView(R.id.tv_region_bank)
         TextView regionBankTextView;
 
-        @BindView(R.id.iv_brouser)
-        ImageView imageViewBrouser;
+        @BindView(R.id.iv_browser)
+        ImageView imageViewBrowser;
         @BindView(R.id.iv_call)
         ImageView imageViewCall;
         @BindView(R.id.iv_map)
@@ -80,30 +81,37 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder
             cityBankTextView.setText(modelDataBaseBanks.getCityIdDb());
             phoneBankTextView.setText("Тел.: " + modelDataBaseBanks.getPhoneDb());
             regionBankTextView.setText(modelDataBaseBanks.getRegionIDb());
-            imageViewBrouser.setOnClickListener(new View.OnClickListener() {
+            imageViewBrowser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnClickImage.onClicksLink(modelDataBaseBanks.getLinkDb());
+                    mOnClickBankItemListener.onClicksLink(modelDataBaseBanks.getLinkDb());
                 }
             });
             imageViewCall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnClickImage.onClickPhone(modelDataBaseBanks.getPhoneDb());
+                    mOnClickBankItemListener.onClickPhone(modelDataBaseBanks.getPhoneDb());
                 }
             });
             imageViewMap.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnClickImage.onClickMap(modelDataBaseBanks);
+                    mOnClickBankItemListener.onClickMap(modelDataBaseBanks);
                 }
             });
             imageViewSetting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnClickImage.onClickSetting(modelDataBaseBanks);
+                    mOnClickBankItemListener.onClickSetting(modelDataBaseBanks);
                 }
             });
         }
+    }
+
+    public interface OnClickBankItemListener {
+        void onClickPhone(String phone);
+        void onClicksLink (String link);
+        void onClickSetting(ModelDataBaseBank modelDataBaseBank);
+        void onClickMap(ModelDataBaseBank modelDataBaseBank);
     }
 }

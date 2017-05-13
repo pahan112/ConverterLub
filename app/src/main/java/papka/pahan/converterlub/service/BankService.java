@@ -22,7 +22,7 @@ import papka.pahan.converterlub.db.ModelDataBaseBank;
 import papka.pahan.converterlub.db.ModelDataBaseCash;
 import papka.pahan.converterlub.db.ModelDataBaseCurrencies;
 import papka.pahan.converterlub.model.ModelBank;
-import papka.pahan.converterlub.preference.PreferenceManager;
+import papka.pahan.converterlub.tools.PreferenceManager;
 
 /**
  * Created by admin on 29.04.2017.
@@ -43,7 +43,6 @@ public class BankService extends IntentService {
         FlowManager.init(new FlowConfig.Builder(this).build());
     }
 
-
     private void connect(String http) throws IOException, JSONException {
         URL url = new URL(http);
         HttpURLConnection c = (HttpURLConnection) url.openConnection();
@@ -58,7 +57,7 @@ public class BankService extends IntentService {
 
         String line;
         while ((line = br.readLine()) != null) {
-            sb.append(line + "\n");
+            sb.append(line).append("\n");
         }
         br.close();
         Gson gson = new Gson();
@@ -85,7 +84,7 @@ public class BankService extends IntentService {
         for (int i = 0; i < mModelBank.getOrganizations().size(); i++) {
             for (String s : mModelBank.getOrganizations().get(i).getCurrencies().keySet()) {
                 ModelDataBaseCash modelDataBaseCash = new ModelDataBaseCash();
-                modelDataBaseCash.setCashNameAtribute(s);
+                modelDataBaseCash.setCashNameAttribute(s);
                 modelDataBaseCash.setAsk(mModelBank.getOrganizations().get(i).getCurrencies().get(s).getAsk());
                 modelDataBaseCash.setBid(mModelBank.getOrganizations().get(i).getCurrencies().get(s).getBid());
                 modelDataBaseCash.setBankId(mModelBank.getOrganizations().get(i).getId());
@@ -98,7 +97,7 @@ public class BankService extends IntentService {
         Delete.tables(ModelDataBaseCurrencies.class);
         ModelDataBaseCurrencies modelDataBaseCurrencies = new ModelDataBaseCurrencies();
         for (String s1 : mModelBank.getCurrencies().keySet()) {
-            modelDataBaseCurrencies.setAtributCash(s1);
+            modelDataBaseCurrencies.setAttributeCash(s1);
             modelDataBaseCurrencies.setFullCash(mModelBank.getCurrencies().get(s1));
             modelDataBaseCurrencies.save();
         }
@@ -106,7 +105,6 @@ public class BankService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-
         try {
             connect("http://resources.finance.ua/ru/public/currency-cash.json");
         } catch (IOException | JSONException e) {
@@ -131,6 +129,4 @@ public class BankService extends IntentService {
             createModelDataBaseCurrencies();
         }
     }
-
 }
-

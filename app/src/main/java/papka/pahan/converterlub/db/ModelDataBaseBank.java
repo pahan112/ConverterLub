@@ -11,7 +11,8 @@ import java.io.Serializable;
  * Created by admin on 29.04.2017.
  */
 @Table(database = BankDataBase.class)
-public class ModelDataBaseBank extends BaseModel implements Serializable{
+public class ModelDataBaseBank extends BaseModel implements Serializable {
+
     @PrimaryKey
     @Column
     private String idDb;
@@ -20,14 +21,20 @@ public class ModelDataBaseBank extends BaseModel implements Serializable{
     @Column
     private String regionIDb;
     @Column
-    private  String cityIdDb;
+    private String cityIdDb;
     @Column
-    private  String phoneDb;
+    private String phoneDb;
     @Column
-    private  String addressDb;
+    private String addressDb;
+    @Column
+    private String linkDb;
 
     public String getIdDb() {
         return idDb;
+    }
+
+    public void setIdDb(String idDb) {
+        this.idDb = idDb;
     }
 
     public String getTitleDb() {
@@ -76,13 +83,5 @@ public class ModelDataBaseBank extends BaseModel implements Serializable{
 
     public void setLinkDb(String linkDb) {
         this.linkDb = linkDb;
-    }
-
-    @Column
-
-    private String linkDb;
-
-    public void setIdDb(String idDb) {
-        this.idDb = idDb;
     }
 }

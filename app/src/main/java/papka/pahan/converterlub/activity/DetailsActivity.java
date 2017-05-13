@@ -31,8 +31,8 @@ import papka.pahan.converterlub.dialog.ShareDialog;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    public static final String BANK_DETAILS= "bank_details";
-    private ModelDataBaseBank mModelDataBaseBank;
+    public static final String BANK_DETAILS = "bank_details";
+
     @BindView(R.id.tv_title_details)
     TextView mTitleDetailsTextView;
     @BindView(R.id.tv_city_details)
@@ -48,6 +48,8 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.rv_bank_setting)
     RecyclerView mCashRecyclerView;
 
+    private ModelDataBaseBank mModelDataBaseBank;
+
     private List<ModelDataBaseCash> mModelDataBaseCashes = new ArrayList<>();
     private List<ModelDataBaseCurrencies> mModelDataBaseCurrencies = new ArrayList<>();
     private CashAdapter mCashAdapter;
@@ -55,25 +57,28 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bank_details);
+        setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
 
         mModelDataBaseBank = (ModelDataBaseBank) getIntent().getSerializableExtra(BANK_DETAILS);
 
-        saveText();
+        setData();
 
         mModelDataBaseCashes.clear();
-        mModelDataBaseCashes.addAll(SQLite.select().from(ModelDataBaseCash.class).where(ModelDataBaseCash_Table.bankId.is(mModelDataBaseBank.getIdDb())).queryList());
+        mModelDataBaseCashes.addAll(SQLite.select().from(ModelDataBaseCash.class)
+                .where(ModelDataBaseCash_Table.bankId.is(mModelDataBaseBank.getIdDb())).queryList());
         mModelDataBaseCurrencies.clear();
-        for (int i = 0; i < mModelDataBaseCashes.size() ; i++) {
-            mModelDataBaseCurrencies.addAll(SQLite.select().from(ModelDataBaseCurrencies.class).where(ModelDataBaseCurrencies_Table.atributCash.is(( mModelDataBaseCashes.get(i)).getCashNameAtribute())).queryList());
+        for (int i = 0; i < mModelDataBaseCashes.size(); i++) {
+            mModelDataBaseCurrencies.addAll(SQLite.select()
+                    .from(ModelDataBaseCurrencies.class).where(ModelDataBaseCurrencies_Table.attributeCash
+                            .is((mModelDataBaseCashes.get(i)).getCashNameAttribute())).queryList());
         }
-        mCashAdapter = new CashAdapter(mModelDataBaseCashes,mModelDataBaseCurrencies);
+        mCashAdapter = new CashAdapter(mModelDataBaseCashes, mModelDataBaseCurrencies);
         mCashRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mCashRecyclerView.setAdapter(mCashAdapter);
     }
 
-    private void saveText(){
+    private void setData() {
         mTitleDetailsTextView.setText(mModelDataBaseBank.getTitleDb());
         mTitleDetailsTextView2.setText(mModelDataBaseBank.getTitleDb());
         mCityDetailsTextView.setText(mModelDataBaseBank.getCityIdDb());
@@ -83,12 +88,12 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.iv_back_details)
-    void onClickBack(){
+    void onClickBack() {
         onBackPressed();
     }
 
     @OnClick(R.id.iv_share)
-    void onClickShare(){
+    void onClickShare() {
         DialogFragment dialogFragment = new ShareDialog();
         Bundle args = new Bundle();
         args.putSerializable(ShareDialog.SHARE_DIALOG, mModelDataBaseBank);
