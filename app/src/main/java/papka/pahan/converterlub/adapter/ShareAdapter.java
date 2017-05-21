@@ -1,7 +1,6 @@
 package papka.pahan.converterlub.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +20,11 @@ public class ShareAdapter extends BaseAdapter {
     private Context context;
     private List<ModelDataBaseCash> modelDataBaseCashes;
     private LayoutInflater inflater;
-    public final String LOG_TAG = "myLog";
 
-    public ShareAdapter(Context context, List<ModelDataBaseCash> data){
+    public ShareAdapter(Context context, List<ModelDataBaseCash> data) {
         this.context = context;
         modelDataBaseCashes = data;
-        inflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -45,21 +43,21 @@ public class ShareAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View viewu, ViewGroup viewGroup) {
-        View view = viewu;
+    public View getView(int i, View mView, ViewGroup viewGroup) {
+        View view = mView;
         if (view == null) {
             view = inflater.inflate(R.layout.cash_share_item, viewGroup, false);
         }
 
-       ModelDataBaseCash currencyOrg = modelDataBaseCashes.get(i);
+        ModelDataBaseCash currencyOrg = modelDataBaseCashes.get(i);
 
         TextView tvId = (TextView) view.findViewById(R.id.tv_cash_name);
         TextView tvAskBid = (TextView) view.findViewById(R.id.tv_cash_value);
 
         tvId.setText(currencyOrg.getCashNameAttribute());
-        tvAskBid.setText(currencyOrg.getAsk()+"/"+currencyOrg.getBid());
-        Log.d(LOG_TAG,"3");
-
+        String s = currencyOrg.getAsk().substring(0,6);
+        String s1 = currencyOrg.getBid().substring(0,6);
+        tvAskBid.setText(s + "/" + s1);
         return view;
     }
 }

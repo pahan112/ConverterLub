@@ -31,13 +31,15 @@
             android:id="@+id/tv_ask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Ask" />
+            tools:text="Ask"
+            android:maxLength="6"/>
 
         <TextView
             android:id="@+id/tv_bid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Bid" />
+            tools:text="Bid"
+            android:maxLength="6"/>
     </LinearLayout>
 
 
