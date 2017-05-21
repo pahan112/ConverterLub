@@ -56,4 +56,7 @@ public class ModelDataBaseCash extends BaseModel{
     }
 
 
+    public long getIdd() {
+        return idd;
+    }
 }

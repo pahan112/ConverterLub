@@ -6,4 +6,12 @@
     <string name="ask">Покупка/</string>
 
     <string name="share">Share</string>
+    <string name="sel">Продажа</string>
+    <string name="address">Адрес:</string>
+    <string name="phone">Тел.:</string>
+
+    <!--FAM strings-->
+    <string name="fam_menu_map">Карта</string>
+    <string name="fam_menu_site">Сайт</string>
+    <string name="fam_menu_call">Позвонить</string>
 </resources>

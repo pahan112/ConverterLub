@@ -77,9 +77,9 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder
 
         public void bind(final ModelDataBaseBank modelDataBaseBanks) {
             titleBankTextView.setText(modelDataBaseBanks.getTitleDb());
-            addressBankTextView.setText("Адрес: " + modelDataBaseBanks.getAddressDb());
+            addressBankTextView.setText(itemView.getContext().getString(R.string.address) + " "  + modelDataBaseBanks.getAddressDb());
             cityBankTextView.setText(modelDataBaseBanks.getCityIdDb());
-            phoneBankTextView.setText("Тел.: " + modelDataBaseBanks.getPhoneDb());
+            phoneBankTextView.setText(itemView.getContext().getString(R.string.phone) + " "  + modelDataBaseBanks.getPhoneDb());
             regionBankTextView.setText(modelDataBaseBanks.getRegionIDb());
             imageViewBrowser.setOnClickListener(new View.OnClickListener() {
                 @Override

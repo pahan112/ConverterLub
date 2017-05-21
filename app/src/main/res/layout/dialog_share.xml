@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_share_dialog"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:minHeight="300dp"
-        android:scaleType="centerCrop" />
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+        <ImageView
+            android:id="@+id/iv_share_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
 
     <TextView
         android:id="@+id/bt_share_dialog"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@+id/iv_share_dialog"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:background="@color/color_grey"
         android:gravity="center"
         android:text="@string/share"
         android:textAllCaps="true"
         android:textColor="@color/colorAccent"
-        android:textSize="23sp" />
-</RelativeLayout>
+        android:textSize="@dimen/text_size_23" />
+</LinearLayout>

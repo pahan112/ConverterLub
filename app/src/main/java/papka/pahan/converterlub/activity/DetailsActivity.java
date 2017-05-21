@@ -1,5 +1,7 @@
 package papka.pahan.converterlub.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -47,6 +49,8 @@ public class DetailsActivity extends AppCompatActivity {
     TextView mPhoneDetailsTextView;
     @BindView(R.id.rv_bank_setting)
     RecyclerView mCashRecyclerView;
+//    @BindView(R.id.fab)
+//    FloatingActionsMenu fab;
 
     private ModelDataBaseBank mModelDataBaseBank;
 
@@ -83,8 +87,8 @@ public class DetailsActivity extends AppCompatActivity {
         mTitleDetailsTextView2.setText(mModelDataBaseBank.getTitleDb());
         mCityDetailsTextView.setText(mModelDataBaseBank.getCityIdDb());
         mLinkDetailsTextView.setText(mModelDataBaseBank.getLinkDb());
-        mAddressDetailsTextView.setText("Адрес: " + mModelDataBaseBank.getAddressDb());
-        mPhoneDetailsTextView.setText("Тел.: " + mModelDataBaseBank.getPhoneDb());
+        mAddressDetailsTextView.setText(getString(R.string.address) + " " + mModelDataBaseBank.getAddressDb());
+        mPhoneDetailsTextView.setText(getString(R.string.phone) + " " + mModelDataBaseBank.getPhoneDb());
     }
 
     @OnClick(R.id.iv_back_details)
@@ -99,5 +103,25 @@ public class DetailsActivity extends AppCompatActivity {
         args.putSerializable(ShareDialog.SHARE_DIALOG, mModelDataBaseBank);
         dialogFragment.setArguments(args);
         dialogFragment.show(getSupportFragmentManager(), "dialogFragment");
+    }
+
+
+    @OnClick(R.id.fab1)
+    public void openCall() {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mModelDataBaseBank.getPhoneDb()));
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.fab2)
+    public void openBrowser() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mModelDataBaseBank.getLinkDb()));
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.fab3)
+    public void openMap() {
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra(MapActivity.BANK_MAP, mModelDataBaseBank);
+        startActivity(intent);
     }
 }
