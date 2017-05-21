@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
+        android:fillViewport="true"
+        android:layout_above="@+id/btn_share"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/iv_share_dialog"
@@ -16,14 +17,15 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/bt_share_dialog"
+        android:id="@+id/btn_share"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="@color/color_grey"
         android:gravity="center"
+        android:padding="@dimen/small_vertical_padding"
         android:text="@string/share"
         android:textAllCaps="true"
         android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_size_23" />
-</LinearLayout>
+        android:textSize="@dimen/toolbar_title_text_size" />
+</RelativeLayout>

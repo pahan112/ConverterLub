@@ -3,10 +3,9 @@
 
     <string name="link">Официальный сайт банка:</string>
     <string name="cashName">Название валюты</string>
-    <string name="ask">Покупка/</string>
+    <string name="ask_bid">Покупка/\nПродажа</string>
 
     <string name="share">Share</string>
-    <string name="sel">Продажа</string>
     <string name="address">Адрес:</string>
     <string name="phone">Тел.:</string>
 

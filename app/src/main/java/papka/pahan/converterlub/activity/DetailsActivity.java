@@ -35,9 +35,9 @@ public class DetailsActivity extends AppCompatActivity {
 
     public static final String BANK_DETAILS = "bank_details";
 
-    @BindView(R.id.tv_title_details)
+    @BindView(R.id.tv_title)
     TextView mTitleDetailsTextView;
-    @BindView(R.id.tv_city_details)
+    @BindView(R.id.tv_subtitle)
     TextView mCityDetailsTextView;
     @BindView(R.id.tv_title_details2)
     TextView mTitleDetailsTextView2;
@@ -91,7 +91,7 @@ public class DetailsActivity extends AppCompatActivity {
         mPhoneDetailsTextView.setText(getString(R.string.phone) + " " + mModelDataBaseBank.getPhoneDb());
     }
 
-    @OnClick(R.id.iv_back_details)
+    @OnClick(R.id.iv_back)
     void onClickBack() {
         onBackPressed();
     }
@@ -106,19 +106,19 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.fab1)
+    @OnClick(R.id.fab_call)
     public void openCall() {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mModelDataBaseBank.getPhoneDb()));
         startActivity(intent);
     }
 
-    @OnClick(R.id.fab2)
+    @OnClick(R.id.fab_link)
     public void openBrowser() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mModelDataBaseBank.getLinkDb()));
         startActivity(intent);
     }
 
-    @OnClick(R.id.fab3)
+    @OnClick(R.id.fab_map)
     public void openMap() {
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra(MapActivity.BANK_MAP, mModelDataBaseBank);

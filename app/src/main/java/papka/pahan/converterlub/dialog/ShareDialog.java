@@ -69,10 +69,10 @@ public class ShareDialog extends DialogFragment {
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.bitmap_layout, null);
 
-        TextView tvTitle = (TextView) view.findViewById(R.id.tvTitle_BL);
+        TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
         tvTitle.setText(mModelDataBaseBank.getTitleDb());
 
-        TextView tvCity = (TextView) view.findViewById(R.id.tvCity_BL);
+        TextView tvCity = (TextView) view.findViewById(R.id.tv_subtitle);
         tvCity.setText(mModelDataBaseBank.getRegionIDb() + '\n' + mModelDataBaseBank.getCityIdDb());
 
         ListView mListView = (ListView) view.findViewById(R.id.lv_BL);
@@ -103,7 +103,7 @@ public class ShareDialog extends DialogFragment {
         super.onDestroyView();
     }
 
-    @OnClick(R.id.bt_share_dialog)
+    @OnClick(R.id.btn_share)
     void clickShareButton() {
         String pathToBmp = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), setShareImage(),"title", null);
         Uri bmpUri = Uri.parse(pathToBmp);

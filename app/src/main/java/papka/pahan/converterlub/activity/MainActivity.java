@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements BankAdapter.OnCli
 
     @BindView(R.id.rv_bank_list)
     RecyclerView mRecyclerViewBank;
-    @BindView(R.id.search_bank)
+    @BindView(R.id.sv_bank)
     SearchView mSearchViewBank;
     @BindView(R.id.sr_bank)
     SwipeRefreshLayout mBankSwipeRefreshLayout;
@@ -50,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements BankAdapter.OnCli
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        mBankAdapter = new BankAdapter(mModelDataBaseBanks, this);
+        mRecyclerViewBank.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewBank.setAdapter(mBankAdapter);
+
         mBankProgressBar.setVisibility(View.VISIBLE);
         initSwipeRefreshLayout();
         initSearch();
@@ -67,10 +71,7 @@ public class MainActivity extends AppCompatActivity implements BankAdapter.OnCli
                 if (resultCode == 200) {
                     mBankProgressBar.setVisibility(View.INVISIBLE);
                     mModelDataBaseBanks.clear();
-                    mModelDataBaseBanks = new Select().from(ModelDataBaseBank.class).queryList();
-                    mRecyclerViewBank.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-                    mBankAdapter = new BankAdapter(mModelDataBaseBanks, MainActivity.this);
-                    mRecyclerViewBank.setAdapter(mBankAdapter);
+                    mModelDataBaseBanks.addAll(new Select().from(ModelDataBaseBank.class).queryList());
                     mBankAdapter.notifyDataSetChanged();
                 }
             }

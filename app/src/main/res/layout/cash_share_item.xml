@@ -5,14 +5,14 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/tvCashName_CSI"
+        android:id="@+id/tv_cash_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:textColor="@color/colorPrimary" />
 
     <TextView
-        android:id="@+id/tvCash_CSI"
+        android:id="@+id/tv_cash_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"

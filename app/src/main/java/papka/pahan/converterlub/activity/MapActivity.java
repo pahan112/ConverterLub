@@ -33,9 +33,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public static final String BANK_MAP = "bank_map";
 
-    @BindView(R.id.tv_city_setting_map)
+    @BindView(R.id.tv_subtitle)
     TextView mMapCityTextView;
-    @BindView(R.id.tv_title_setting_map)
+    @BindView(R.id.tv_title)
     TextView mMapTitleTextView;
 
     private GoogleMap mGoogleMap;
@@ -55,7 +55,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         supportMapFragment.getMapAsync(this);
     }
 
-    @OnClick(R.id.iv_back_map)
+    @OnClick(R.id.iv_back)
     void clickBack() {
         onBackPressed();
     }

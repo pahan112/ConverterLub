@@ -1,40 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginEnd="12dp"
-    android:layout_marginStart="12dp"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:paddingBottom="@dimen/small_vertical_padding"
+    android:paddingEnd="@dimen/main_padding"
+    android:paddingStart="@dimen/main_padding"
+    android:paddingTop="@dimen/small_vertical_padding">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_currency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/ll_ask_bid"
+        android:textSize="@dimen/main_text_size"
+        tools:text="Cash" />
+
+    <LinearLayout
+        android:id="@+id/ll_ask_bid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_ask"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/standard_16">
+            tools:text="Ask" />
 
-            <TextView
-                android:id="@+id/tv_currency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:textSize="@dimen/text_size_16"
-                tools:text="Cash" />
+        <TextView
+            android:id="@+id/tv_bid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Bid" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_ask"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                tools:text="Ask" />
 
-            <TextView
-                android:id="@+id/tv_bid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/tv_ask"
-                android:layout_below="@+id/tv_ask"
-                tools:text="Bid" />
-        </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

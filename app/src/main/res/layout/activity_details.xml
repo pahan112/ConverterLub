@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rv_bank_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_light_grey"
@@ -11,46 +10,55 @@
     <RelativeLayout
         android:id="@+id/rv_bank_menu"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_70"
-        android:background="@color/colorPrimary">
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
+        android:paddingEnd="@dimen/main_padding"
+        android:paddingStart="@dimen/main_padding">
 
         <ImageView
-            android:id="@+id/iv_back_details"
-            android:layout_width="@dimen/standard_25"
-            android:layout_height="@dimen/standard_25"
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/back_button_size"
+            android:layout_height="@dimen/back_button_size"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/standard_15"
             app:srcCompat="@drawable/ic_arrow" />
 
-        <TextView
-            android:id="@+id/tv_title_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/standard_15"
-            android:layout_marginTop="@dimen/standard_10"
-            android:layout_toEndOf="@+id/iv_back_details"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_23"
-            tools:text="Title" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/small_horizontal_padding"
+            android:layout_toEndOf="@+id/iv_back"
+            android:layout_toStartOf="@+id/iv_share"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_city_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/tv_title_details"
-            android:layout_below="@+id/tv_title_details"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_16"
-            tools:text="City" />
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/toolbar_title_text_size"
+                tools:text="Bank Name" />
+
+            <TextView
+                android:id="@+id/tv_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/main_text_size"
+                tools:text="City" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_share"
-            android:layout_width="@dimen/standard_30"
-            android:layout_height="@dimen/standard_30"
+            android:layout_width="@dimen/share_image_size"
+            android:layout_height="@dimen/share_image_size"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/standard_30"
             app:srcCompat="@drawable/ic_share" />
     </RelativeLayout>
 
@@ -59,54 +67,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rv_bank_menu"
-        android:layout_marginBottom="@dimen/standard_5"
-        android:layout_marginEnd="@dimen/standard_10"
-        android:layout_marginStart="@dimen/standard_10"
-        android:layout_marginTop="@dimen/standard_10"
-        app:cardElevation="@dimen/standard_4">
+        android:layout_marginBottom="@dimen/small_vertical_padding"
+        android:layout_marginEnd="@dimen/small_horizontal_padding"
+        android:layout_marginStart="@dimen/small_horizontal_padding"
+        android:layout_marginTop="@dimen/small_vertical_padding"
+        app:cardElevation="@dimen/card_elevation">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:orientation="vertical"
-            android:padding="@dimen/standard_15">
+            android:padding="@dimen/main_padding">
 
             <TextView
                 android:id="@+id/tv_title_details2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/standard_10"
+                android:layout_marginBottom="@dimen/small_vertical_padding"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/text_size_23"
+                android:textSize="@dimen/toolbar_title_text_size"
                 tools:text="City" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_vertical_padding"
                 android:text="@string/link"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/main_text_size" />
 
             <TextView
                 android:id="@+id/tv_link_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/holo_blue_light"
-                android:textSize="@dimen/text_size_16"
+                android:textSize="@dimen/main_text_size"
                 tools:text="Link" />
 
             <TextView
                 android:id="@+id/tv_address_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_16"
+                android:textSize="@dimen/main_text_size"
                 tools:text="Address" />
 
             <TextView
                 android:id="@+id/tv_phone_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_16"
+                android:textSize="@dimen/main_text_size"
                 tools:text="Phone" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
@@ -116,63 +125,64 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cw_bank_details"
-        android:layout_marginBottom="@dimen/standard_5"
-        android:layout_marginEnd="@dimen/standard_10"
-        android:layout_marginStart="@dimen/standard_10"
-        app:cardElevation="@dimen/standard_4">
+        android:layout_marginBottom="@dimen/small_vertical_padding"
+        android:layout_marginEnd="@dimen/small_horizontal_padding"
+        android:layout_marginStart="@dimen/small_horizontal_padding"
+        app:cardElevation="@dimen/card_elevation">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white">
+            android:background="@android:color/white"
+            android:paddingEnd="@dimen/main_padding"
+            android:paddingStart="@dimen/main_padding">
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:paddingStart="@dimen/standard_10"
                 android:text="@string/cashName"
-                android:textSize="@dimen/text_size_18" />
+                android:textSize="@dimen/text_subtitle_text_size" />
 
             <TextView
-                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginEnd="@dimen/standard_20"
-                android:text="@string/ask" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textView4"
-                android:layout_below="@+id/textView3"
-                android:text="@string/sel" />
+                android:gravity="start"
+                android:text="@string/ask_bid" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_bank_setting"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/cv_cash_details" />
+        android:layout_below="@+id/cv_cash_details"
+        android:layout_marginBottom="@dimen/small_vertical_padding"
+        android:layout_marginEnd="@dimen/small_horizontal_padding"
+        android:layout_marginStart="@dimen/small_horizontal_padding">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_bank_setting"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v7.widget.CardView>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/fab"
+        android:id="@+id/fab_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/standard_16"
+        android:layout_margin="@dimen/small_horizontal_padding"
+        android:elevation="@dimen/card_elevation"
         app:fab_addButtonColorNormal="@color/colorAccent"
         app:fab_addButtonColorPressed="@color/colorAccent"
         app:fab_labelStyle="@style/FabLabelStyle">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab1"
+            android:id="@+id/fab_call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/color_light_grey"
@@ -181,7 +191,7 @@
             app:fab_title="@string/fam_menu_call" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab2"
+            android:id="@+id/fab_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/color_light_grey"
@@ -190,7 +200,7 @@
             app:fab_title="@string/fam_menu_site" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab3"
+            android:id="@+id/fab_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/color_light_grey"

@@ -53,8 +53,8 @@ public class ShareAdapter extends BaseAdapter {
 
        ModelDataBaseCash currencyOrg = modelDataBaseCashes.get(i);
 
-        TextView tvId = (TextView) view.findViewById(R.id.tvCashName_CSI);
-        TextView tvAskBid = (TextView) view.findViewById(R.id.tvCash_CSI);
+        TextView tvId = (TextView) view.findViewById(R.id.tv_cash_name);
+        TextView tvAskBid = (TextView) view.findViewById(R.id.tv_cash_value);
 
         tvId.setText(currencyOrg.getCashNameAttribute());
         tvAskBid.setText(currencyOrg.getAsk()+"/"+currencyOrg.getBid());

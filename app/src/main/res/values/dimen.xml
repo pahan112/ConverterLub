@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="standard_45">45dp</dimen>
-    <dimen name="standard_16">16dp</dimen>
-    <dimen name="standard_10">10dp</dimen>
-    <dimen name="standard_20">20dp</dimen>
-    <dimen name="standard_15">15dp</dimen>
-    <dimen name="standard_4">4dp</dimen>
-    <dimen name="standard_5">5dp</dimen>
-    <dimen name="standard_7">7dp</dimen>
-    <dimen name="standard_8">8dp</dimen>
-    <dimen name="standard_14">14dp</dimen>
-    <dimen name="standard_22">22dp</dimen>
-    <dimen name="standard_25">25dp</dimen>
-    <dimen name="standard_30">30dp</dimen>
-    <dimen name="standard_35">35dp</dimen>
-    <dimen name="standard_70">70dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="main_padding">16dp</dimen>
+    <dimen name="small_horizontal_padding">8dp</dimen>
+    <dimen name="small_vertical_padding">6dp</dimen>
+    <dimen name="back_button_size">25dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+
+    <!--Details Dimens-->
+    <dimen name="share_image_size">30dp</dimen>
+
+    <!--Bank Dimens-->
+    <dimen name="bank_details_bar_height">35dp</dimen>
 
     <!--Text Dimens-->
-    <dimen name="text_size_16">16sp</dimen>
-    <dimen name="text_size_18">18sp</dimen>
-    <dimen name="text_size_23">23sp</dimen>
+    <dimen name="toolbar_title_text_size">21sp</dimen>
+    <dimen name="text_subtitle_text_size">18sp</dimen>
+    <dimen name="main_text_size">15sp</dimen>
 </resources>
