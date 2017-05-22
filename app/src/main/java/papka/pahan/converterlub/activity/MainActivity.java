@@ -14,6 +14,7 @@ import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -26,6 +27,7 @@ import papka.pahan.converterlub.R;
 import papka.pahan.converterlub.adapter.BankAdapter;
 import papka.pahan.converterlub.db.ModelDataBaseBank;
 import papka.pahan.converterlub.service.BankService;
+import papka.pahan.converterlub.tools.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity implements BankAdapter.OnClickBankItemListener {
 
@@ -73,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements BankAdapter.OnCli
                     mModelDataBaseBanks.clear();
                     mModelDataBaseBanks.addAll(new Select().from(ModelDataBaseBank.class).queryList());
                     mBankAdapter.notifyDataSetChanged();
+                    if(PreferenceManager.loadStringParam(getBaseContext(), PreferenceManager.PARAM_LAST_UPDATE).isEmpty()){
+                        Toast.makeText(getBaseContext(),"Проверьте соеденение с интернетом",Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         };

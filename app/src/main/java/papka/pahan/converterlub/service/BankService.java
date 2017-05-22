@@ -43,6 +43,19 @@ public class BankService extends IntentService {
         FlowManager.init(new FlowConfig.Builder(this).build());
     }
 
+    public boolean isInternetWorking() {
+        boolean success = false;
+        try {
+            URL url = new URL("https://google.com");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(10000);
+            connection.connect();
+            success = connection.getResponseCode() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
     private void connect(String http) throws IOException, JSONException {
         URL url = new URL(http);
         HttpURLConnection c = (HttpURLConnection) url.openConnection();
@@ -105,18 +118,25 @@ public class BankService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        try {
-            connect("http://resources.finance.ua/ru/public/currency-cash.json");
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
         mRec = intent.getParcelableExtra("receiver");
-        getPref();
-        if (mRec != null) {
-            mRec.send(200, null);
+        if (isInternetWorking()) {
+
+            try {
+                connect("http://resources.finance.ua/ru/public/currency-cash.json");
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            getPref();
+            if (mRec != null) {
+                mRec.send(200, null);
+            }
+        }
+        else {
+            if (mRec != null) {
+                mRec.send(200, null);
+            }
         }
     }
-
     private void getPref() {
         if (PreferenceManager.loadStringParam(this, PreferenceManager.PARAM_LAST_UPDATE).equals(mModelBank.getDate())) {
             if (mRec != null) {
